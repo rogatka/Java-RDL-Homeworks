@@ -35,10 +35,12 @@ public class MyCache {
 
     private static String getContentFromUrl(String link) {
         StringBuilder content = new StringBuilder();
+        InputStream inputStream = null;
+        BufferedReader reader = null;
         try {
             URL url = new URL(link);
-            InputStream inputStream = url.openStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            inputStream = url.openStream();
+            reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line);
@@ -47,6 +49,21 @@ public class MyCache {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //DO NOTHING
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    //DO NOTHING
+                }
+            }
         }
         return content.append("\r\n").toString();
     }
