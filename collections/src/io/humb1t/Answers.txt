@@ -1,0 +1,74 @@
+# Java Collections
+
+## Getting started
+
+1. Open `io.humb1t.Main.java` and compare different approaches in iterations. Write down your thoughts,
+what is your favourite option? Which one is easier to read and which one is easier to write? Why?
+---------------->
+Answer:
+For now my favorite option is foreach-cycle (by this i mean "for (Object obj : objects) {}"), but I like
+how it looks with streams and I will try to use streams more often because, in my opinion, it's easier to read.
+
+The easiest way to write simple iteration is foreach-cycle ("for (Object obj : objects) {}") because of its
+syntax. But if you know streams and have many conditions and filters for your collection, it's better to
+use streams because it's more compact and readable.
+<----------------
+2. Add numeric field to `Order` class, use it to filter collection of orders by some criteria
+(more than 50 order items for example).
+
+3. Imagine the situation - you need to implement [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type))
+of incoming requests, to process incoming requests we have 3 independent "processors".
+How can we design our application in such a case and what pros and cons we would face in different approaches?
+Write down your thoughts and implement one possible solution.
+
+---------------->
+Answer:
+As it said in the docs:
+ * A {@code ConcurrentLinkedQueue} is an appropriate choice when
+ * many threads will share access to a common collection.
+
+But there is also a BlockingQueue. From docs:
+ *<p>{@code BlockingQueue} implementations are designed to be used
+ * primarily for producer-consumer queues
+
+BlockingQueue has less cost when the queue is empty and "consumers" needs to wait for the appearance of first
+element in the queue (it has special put() and take() methods). If we will use ConcurrentLinkedQueue in that
+case, "producers" will indefinitely interrogate the queue until getting some element.
+
+From StackOverFlow (https://stackoverflow.com/questions/1426754/linkedblockingqueue-vs-concurrentlinkedqueue):
+
+<<LinkedBlockingQueue blocks the consumer or the producer when the queue is empty or full and the respective
+consumer/producer thread is put to sleep. But this blocking feature comes with a cost: every put or take
+operation is lock contended between the producers or consumers (if many), so in scenarios with many
+producers/consumers the operation might be slower.
+
+ConcurrentLinkedQueue is not using locks, but CAS, on its put/take operations potentially reducing contention
+with many producer and consumer threads. But being an "wait free" data structure, ConcurrentLinkedQueue will
+not block when empty, meaning that the consumer will need to deal with the take() returning null values by
+"busy waiting", for example, with the consumer thread eating up CPU.
+
+So which one is "better" depends on the number of consumer threads, on the rate they consume/produce, etc.
+A benchmark is needed for each scenario.
+
+One particular use case where the ConcurrentLinkedQueue is clearly better is when producers first produce
+something and finish their job by placing the work in the queue and only after the consumers starts to consume,
+knowing that they will be done when queue is empty. (here is no concurrency between producer-consumer but only
+between producer-producer and consumer-consumer)>>
+
+<----------------
+
+4. Imagine the situation when you have a `Collection` and should remove all duplicates in it.
+How would you do it? Implement your solution using only Java SE.
+---------------->
+Answer:
+Set<Integer> setOfNums = new HashSet<>(listOfNums);
+or
+listOfNums = listOfNums.stream().distinct().collect(Collectors.toList());
+<----------------
+
+5. There is an old war between `ArrayList` and `Linked List` - choose new fighters and implement your
+own benchmark (`Vector` vs `Queue` for example). Write down your thoughts.
+HashSet is faster than TreeSet if we correct realize hashcode() and equals methods.
+
+6. `Map` is very good in implementation of simple [caches](https://en.wikipedia.org/wiki/Cache_(computing)).
+Implement your own cache using `Map`.
