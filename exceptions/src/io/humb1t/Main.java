@@ -16,6 +16,7 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
 
         } catch (FileNotFoundException e) {
@@ -26,7 +27,7 @@ public class Main {
     }
 
     public static class LifeCycleAction {
-        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException {
+        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException, MyException {
             throw new LifeCycleActionExecutionException();
         }
     }
@@ -55,5 +56,23 @@ public class Main {
 
     private String returnValueOrThrowException() throws AccessDeniedException {
         return "OK";
+    }
+
+
+    public static class MyException extends Exception {
+        public MyException() {
+        }
+
+        public MyException(String message) {
+            super(message);
+        }
+
+        public MyException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public MyException(Throwable cause) {
+            super(cause);
+        }
     }
 }

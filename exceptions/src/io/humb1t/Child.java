@@ -8,7 +8,7 @@ public class Child extends Parent {
     }
 
     @Override
-    public void throwOnlyOneException() throws Main.LifeCycleActionExecutionException, AccessDeniedException {
+    public void throwOnlyOneException() throws Main.LifeCycleActionExecutionException/*, AccessDeniedException*/ {
         super.throwOnlyOneException();
     }
 }
