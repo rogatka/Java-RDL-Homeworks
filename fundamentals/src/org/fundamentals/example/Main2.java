@@ -14,6 +14,8 @@ public class Main2 {
                 return new JavaScriptLanguage();
             case "python":
                 return new PythonLanguage();
+            case "haskell":
+                return new HaskellLanguage();
             default:
                 return new UnknownLanguage(name);
         }

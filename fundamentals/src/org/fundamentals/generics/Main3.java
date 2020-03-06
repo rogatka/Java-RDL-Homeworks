@@ -13,7 +13,7 @@ public class Main3 {
                 return new Language("Java", () -> "OOP", () -> "strongly-typed");
             case "js":
             case "javascript":
-                return new Language("JavaScript", () -> "Multi-paradigm", () -> "dynamically-ped");
+                return new Language("JavaScript", () -> "Multi-paradigm", () -> "dynamically-typed");
             case "python":
                 return new Language("Python", () -> "Multi-paradigm", () -> "dynamically-typed");
             case "haskell":
