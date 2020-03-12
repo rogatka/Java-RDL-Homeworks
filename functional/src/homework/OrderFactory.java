@@ -5,15 +5,15 @@ import homework.Orders.OrderStatus;
 
 public interface OrderFactory {
 
-    default Order getCompletedOrder() {
+    default Order createCompletedOrder() {
         return new Order(OrderStatus.COMPLETED);
     }
 
-    default Order getProcessingOrder() {
+    default Order createProcessingOrder() {
         return new Order(OrderStatus.PROCESSING);
     }
 
-    default Order getNotStartedOrder() {
+    default Order createNotStartedOrder() {
         return new Order(OrderStatus.NOT_STARTED);
     }
 }
