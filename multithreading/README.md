@@ -72,6 +72,7 @@ The result of this task should be implementation of thread safe singleton patter
 2. The brief overview of the java.util.concurrent package.
 
 - https://habr.com/ru/company/luxoft/blog/157273/
+- https://habr.com/ru/post/277669/
 
 3. The deep dive to the multithreading in Java mostly for learning in the future.
 
