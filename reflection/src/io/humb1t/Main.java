@@ -1,9 +1,6 @@
 package io.humb1t;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.TypeVariable;
+import java.lang.reflect.*;
 
 public class Main {
 
@@ -25,28 +22,37 @@ public class Main {
 
         try {
             Class mainClass = Main.class;
-            Method mainMethod = c.getMethod("main");
+            Method mainMethod = mainClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException x) {
             x.printStackTrace();
         }
 
         try {
             Class<?> mainClass = Main.class;
-            Method mainMethod = c.getMethod("main");
+            Method mainMethod = mainClass.getMethod("main", String[].class);
         } catch (NoSuchMethodException x) {
             x.printStackTrace();
         }
 
-        Class<?> classWithPrivateNoArgsConstructor = Class.forName("io.humb1t.Main.ClassWithPrivateNoArgsConstructor");
+        Class<?> mainClass = Class.forName("io.humb1t.Main");
         try {
-            classWithPrivateNoArgsConstructor.newInstance();
+            Main mainObj = (Main) mainClass.newInstance();
+            Class<?> innerClass = Class.forName("io.humb1t.Main$ClassWithPrivateNoArgsConstructor");
+            Constructor<?> innerClassConstructor = innerClass.getDeclaredConstructor(mainClass);
+            innerClassConstructor.setAccessible(true);
+            ClassWithPrivateNoArgsConstructor innerObj = (ClassWithPrivateNoArgsConstructor) innerClassConstructor.newInstance(mainObj);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
 
-        try {
+
+        /*try {
             classWithPrivateNoArgsConstructor.getConstructor().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -56,7 +62,7 @@ public class Main {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public enum OrderStatus {
