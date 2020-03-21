@@ -5,7 +5,7 @@ import hometask.task1.exception.NotEnoughMoneyException;
 
 public class BankAccount implements Runnable {
     private final Bank bank;
-    private int id;
+    private final int id;
 
     public BankAccount(int id, Bank bank) {
         this.id = id;
@@ -14,17 +14,14 @@ public class BankAccount implements Runnable {
 
     @Override
     public void run() {
-        while (bank.getTotalAmount() > 0) {
-            int amount = (int) (Math.random() * 1000 + 1);
-            withdrawMoney(amount);
-        }
-    }
-
-    public void withdrawMoney(int amount) {
-        try {
-            bank.withdrawMoney(amount, this);
-        } catch (NotEnoughMoneyException e) {
-            e.printStackTrace();
+        int totalAmount;
+        while (!Thread.currentThread().isInterrupted() && (totalAmount = bank.getTotalAmount()) > 0) {
+            try {
+                int amount = (int) (Math.random() * totalAmount + 1);
+                bank.withdrawMoney(amount, this);
+            } catch (NotEnoughMoneyException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 

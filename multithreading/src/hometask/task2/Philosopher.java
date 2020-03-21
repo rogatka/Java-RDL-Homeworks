@@ -6,7 +6,7 @@ public class Philosopher implements Runnable {
     private final int id;
     private final Fork leftFork;
     private final Fork rightFork;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public Philosopher(int id, Fork leftFork, Fork rightFork) {
         this.id = id;
@@ -16,9 +16,8 @@ public class Philosopher implements Runnable {
 
     @Override
     public void run() {
-
         try {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 if (leftFork.pickUp(this, "left")) {
                     if (rightFork.pickUp(this, "right")) {
                         eat();
@@ -28,8 +27,9 @@ public class Philosopher implements Runnable {
                 }
                 think();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.out.println("Philosopher " + this.getId() + " has been interrupted.");
+            Thread.currentThread().interrupt();
         }
     }
 

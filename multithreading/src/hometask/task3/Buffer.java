@@ -19,40 +19,31 @@ public class Buffer {
 
         for (int i = 0; i < NUMBER_OF_PRODUCERS; i++) {
             producerService.submit(() -> {
-                while (true) {
-                    Element e = new Element();
-                    queue.put(e);
-                    System.out.println(Thread.currentThread().getName() + " offered " + e);
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        Element e = new Element();
+                        queue.put(e);
+                        System.out.println(Thread.currentThread().getName() + " offered " + e);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             });
         }
 
         for (int i = 0; i < NUMBER_OF_CONSUMERS; i++) {
-//            Не могу понять, почему при использовании метода submit() InterruptedException можно не обрабатывать.
-//            В таком случае при прерывании потока исключение не вылетает и программа просто повисает.
             consumerService.submit(() -> {
-                while (true) {
-                    Element e = queue.take();
-                    System.out.println(e + " was taken by " + Thread.currentThread().getName());
-
-                    Thread.sleep(1000);
-//                    Thread.currentThread().interrupt();
-                }
-            });
-
-            /*consumerService.execute(() -> {
-                try {
-                    while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
                         Element e = queue.take();
                         System.out.println(e + " was taken by " + Thread.currentThread().getName());
 
                         Thread.sleep(1000);
+                    } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
                 }
-            });*/
+            });
         }
 
         Thread.sleep(TIMEOUT);

@@ -11,7 +11,6 @@ public class LockBank extends Bank {
     private final static Lock lock = new ReentrantLock();
 
     public LockBank(int totalAmount) {
-        super();
         this.totalAmount = totalAmount;
     }
 
@@ -20,24 +19,19 @@ public class LockBank extends Bank {
         try {
             System.out.printf("<Attempt to withdraw [$%d] from [Account#%d]. Total amount in the bank is [$%d]>\r\n", amount, account.getId(), getTotalAmount());
             if (hasEnoughMoney(amount)) {
-                transferMoney(amount);
-                System.out.printf("Successfully withdraw-operation [$%d] on [Account#%d].Total amount in the Bank is [$%d]\r\n", amount, account.getId(), getTotalAmount());
+                if (amount <= totalAmount) {
+                    totalAmount -= amount;
+                    System.out.printf("Successfully withdraw-operation [$%d] on [Account#%d].Total amount in the Bank is [$%d]\r\n", amount, account.getId(), getTotalAmount());
+                } else {
+                    throw new NotEnoughMoneyException("Attempt to withdraw [$" + amount + "], but actual total amount is [$" + totalAmount + "]");
+                }
             }
         } finally {
             lock.unlock();
         }
     }
 
-    public void transferMoney(int amount) throws NotEnoughMoneyException {
-        if (amount <= totalAmount) {
-            totalAmount -= amount;
-        } else {
-            throw new NotEnoughMoneyException("Attempt to withdraw [$" + amount + "], but actual total amount is [$" + totalAmount + "]");
-        }
-    }
-
     public boolean hasEnoughMoney(int amount) {
-//      added more code to increase possibility of exception
         if (amount <= totalAmount) {
             System.out.println("Processing...");
             return true;

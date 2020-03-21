@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 public class Main {
     private static final int NUMBER_OF_PHILOSOPHERS = 5;
-    private static final int TIMEOUT = 1000 * 10;
+    private static final int TIMEOUT_MILLIS = 1000 * 10;
 
     public static void main(String[] args) throws InterruptedException {
         Philosopher[] philosophers = new Philosopher[NUMBER_OF_PHILOSOPHERS];
@@ -19,7 +19,7 @@ public class Main {
             philosophers[i] = new Philosopher(i, forks[i], forks[(i + 1) % NUMBER_OF_PHILOSOPHERS]);
             executorService.submit(philosophers[i]);
         }
-        Thread.sleep(TIMEOUT);
+        Thread.sleep(TIMEOUT_MILLIS);
         executorService.shutdownNow();
     }
 }
