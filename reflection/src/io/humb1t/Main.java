@@ -8,7 +8,7 @@ public class Main {
         Class c = new Order().getClass();
         Class os = OrderStatus.PROCESSING.getClass();
         Class primitiveClass = boolean.class;
-//        Class orderClassByName = Class.forName("io.humb1t.Main.Order");
+        Class orderClassByName = Class.forName("io.humb1t.Main$Order");
 //        Class arrayClassByStrangeName = Class.forName("[L.io.humb1t.Main.Order;");
         Class voidClass = Void.TYPE;
 
@@ -50,19 +50,6 @@ public class Main {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
-
-        /*try {
-            classWithPrivateNoArgsConstructor.getConstructor().newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public enum OrderStatus {

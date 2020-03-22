@@ -2,10 +2,8 @@ package io.humb1t.hometask;
 
 import org.reflections.Reflections;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     static final int CAPACITY = 10;
@@ -14,10 +12,11 @@ public class Main {
 
     public static void main(String[] args) {
         arrayOfInstances = getFilledArray(CAPACITY);
-
         mapOfAlternatives = checkArrayOfInstances();
 
-        mapOfAlternatives.forEach(Main::printFormattedOutput);
+        mapOfAlternatives.keySet().stream().collect(Collectors.groupingBy(Object::getClass)).forEach(Main::printDeprecatedInstances);
+
+        mapOfAlternatives.forEach(Main::printAlternatives);
     }
 
     private static Map<Object, Set<Class<?>>> checkArrayOfInstances() {
@@ -29,13 +28,16 @@ public class Main {
                 if (!deprecatedClassAndAlternatives.containsKey(obj)) {
                     deprecatedClassAndAlternatives.put(obj, new HashSet<>());
                     Class<?> parentClass = obj.getClass().getSuperclass();
-                    for (Class<?> childClass : reflections.getSubTypesOf(parentClass)) {
-                        if (!childClass.isAnnotationPresent(Deprecated.class)) {
-                            deprecatedClassAndAlternatives.get(obj).add(childClass);
+                    if (parentClass != Object.class) {
+                        for (Class<?> childClass : reflections.getSubTypesOf(parentClass)) {
+                            if (!childClass.isAnnotationPresent(Deprecated.class)) {
+                                deprecatedClassAndAlternatives.get(obj).add(childClass);
+                            }
                         }
                     }
 
                     Class<?>[] parentInterfaces = obj.getClass().getInterfaces();
+                    parentInterfaces = new Class<?>[]{};
                     for (Class<?> parentInterface : parentInterfaces) {
                         for (Class<?> inheritClass : reflections.getSubTypesOf(parentInterface)) {
                             if (!inheritClass.isAnnotationPresent(Deprecated.class)) {
@@ -49,9 +51,15 @@ public class Main {
         return deprecatedClassAndAlternatives;
     }
 
-    private static void printFormattedOutput(Object deprObj, Set<Class<?>> setOfAlternatives) {
+    private static void printAlternatives(Object deprObj, Set<Class<?>> setOfAlternatives) {
         System.out.println("Non-deprecated alternatives for instance [" + deprObj + "] of " + deprObj.getClass().getSimpleName() + ": ");
-        setOfAlternatives.forEach(repl -> System.out.println("> " + repl));
+        setOfAlternatives.forEach(replacement -> System.out.println("> " + replacement));
+        System.out.println("\r\n");
+    }
+
+    private static void printDeprecatedInstances(Class<?> clazz, List<Object> listOfInstances) {
+        System.out.println("Instances of deprecated class [" + clazz.getName() + "]: ");
+        listOfInstances.forEach(instance -> System.out.println("| " + instance));
         System.out.println("\r\n");
     }
 
