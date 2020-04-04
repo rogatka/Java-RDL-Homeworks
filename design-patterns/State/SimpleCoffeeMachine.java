@@ -1,7 +1,13 @@
 package State;
 
 public class SimpleCoffeeMachine {
-    private ICoffeeMachine state = new OffState(this);
+    private AState state;
+    private int price;
+
+    public SimpleCoffeeMachine(int price) {
+        this.price = price;
+        this.state = new OffState(this);
+    }
 
     public void init() {
         state.init();
@@ -17,8 +23,24 @@ public class SimpleCoffeeMachine {
         state.stop();
     }
 
-    public void changeState(ICoffeeMachine state) {
+    public void changeState(AState state) {
         System.out.println("Changing state to [" + state.getClass().getSimpleName() + "]");
         this.state = state;
+    }
+
+    public CoffeeMachineStatesSet getState() {
+        return state.getState();
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void dispatchError() {
+        System.out.println("This operation is not available.");
     }
 }

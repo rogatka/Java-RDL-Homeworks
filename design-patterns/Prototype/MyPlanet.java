@@ -11,7 +11,11 @@ public class MyPlanet extends APlanet {
 
     @Override
     public void addCreature(ICreature creature) {
-        creatures.add(creature.copy());
+        ICreature clone = creature.copy();
+        while (creatures.contains(clone)) {
+            clone = creature.copy();
+        }
+        creatures.add(clone);
         population++;
     }
 

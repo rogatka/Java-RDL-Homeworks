@@ -41,4 +41,9 @@ public class OffState extends AState {
     public void stop() {
         //DO NOTHING
     }
+
+    @Override
+    CoffeeMachineStatesSet getState() {
+        return CoffeeMachineStatesSet.OFF;
+    }
 }

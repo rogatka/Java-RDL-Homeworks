@@ -11,9 +11,10 @@ public class DivideByThreeNumbersHandler extends ABaseHandler {
     public void handle(Request request) {
         if (validate(request)) {
             System.out.println(request.getValue() + " is divided by 3. Was handled by " + this.getClass().getSimpleName());
-        }
-        if (this.next != null) {
-            this.next.handle(request);
+        } else {
+            if (this.next != null) {
+                this.next.handle(request);
+            }
         }
     }
 

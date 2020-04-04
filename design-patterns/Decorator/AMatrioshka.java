@@ -1,7 +1,7 @@
 package Decorator;
 
 public abstract class AMatrioshka {
-    String name = "Matrioshka"; // имя матрёшки
+    String name; // имя матрёшки
 
     public static void main(String[] args) {
         AMatrioshka matrioshka = new BigMatrioshka(new BlueMatrioshka(new Matrioshka()));
@@ -12,14 +12,8 @@ public abstract class AMatrioshka {
 }
 
 class Matrioshka extends AMatrioshka {
-    String name = "Simple";
-
     public Matrioshka() {
-        this.name = name + " " + super.name;
-    }
-
-    public Matrioshka(AMatrioshka matrioshka) {
-        this.name = name + " " + matrioshka.getName();
+        this.name = "Matrioshka";
     }
 
     @Override
@@ -28,71 +22,44 @@ class Matrioshka extends AMatrioshka {
     }
 }
 
-class BlueMatrioshka extends AMatrioshka {
-    String name = "Blue";
+class MatrioshkaDecorator extends AMatrioshka {
+    protected AMatrioshka matrioshka;
 
-    public BlueMatrioshka() {
-        this.name = name + " " + super.name;
+    public MatrioshkaDecorator(AMatrioshka matrioshka) {
+        this.matrioshka = matrioshka;
     }
+
+    @Override
+    public String getName() {
+        return this.name + " " + matrioshka.getName();
+    }
+}
+
+class BlueMatrioshka extends MatrioshkaDecorator {
 
     public BlueMatrioshka(AMatrioshka matrioshka) {
-        this.name = name + " " + matrioshka.getName();
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(matrioshka);
+        this.name = "Blue";
     }
 }
 
-class RedMatrioshka extends AMatrioshka {
-    String name = "Red";
-
-    public RedMatrioshka() {
-        this.name = name + " " + super.name;
-    }
-
+class RedMatrioshka extends MatrioshkaDecorator {
     public RedMatrioshka(AMatrioshka matrioshka) {
-        this.name = name + " " + matrioshka.getName();
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(matrioshka);
+        this.name = "Red";
     }
 }
 
-class PurpleMatrioshka extends AMatrioshka {
-    String name = "Purple";
-
-    public PurpleMatrioshka() {
-        this.name = name + " " + super.name;
-    }
-
+class PurpleMatrioshka extends MatrioshkaDecorator {
     public PurpleMatrioshka(AMatrioshka matrioshka) {
-        this.name = name + " " + matrioshka.getName();
-        ;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(matrioshka);
+        this.name = "Purple";
     }
 }
 
-class BigMatrioshka extends AMatrioshka {
-    String name = "Big";
-
-    public BigMatrioshka() {
-        this.name = name + " " + super.name;
-    }
-
+class BigMatrioshka extends MatrioshkaDecorator {
     public BigMatrioshka(AMatrioshka matrioshka) {
-        this.name = name + " " + matrioshka.getName();
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        super(matrioshka);
+        this.name = "Big";
     }
 }

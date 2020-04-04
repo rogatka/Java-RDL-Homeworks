@@ -36,4 +36,9 @@ public class CoffeeIsReadyState extends AState {
     public void stop() {
         dispatchError();
     }
+
+    @Override
+    CoffeeMachineStatesSet getState() {
+        return CoffeeMachineStatesSet.COFFEE_IS_READY;
+    }
 }

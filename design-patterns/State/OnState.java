@@ -2,14 +2,13 @@ package State;
 
 public class OnState extends AState {
 
-
     public OnState(SimpleCoffeeMachine context) {
         super(context);
     }
 
     @Override
     public void deposit(int moneyAmount) {
-        if (moneyAmount < price) {
+        if (moneyAmount < context.getPrice()) {
             dispatchError();
         } else {
             System.out.println("Thank you for using our SimpleCoffeeMachine! You deposit " + moneyAmount + "$");
@@ -30,8 +29,8 @@ public class OnState extends AState {
 
     @Override
     public void giveChange(int moneyAmount) {
-        if (moneyAmount > price) {
-            System.out.println("Your change is " + (moneyAmount - price) + "$...");
+        if (moneyAmount > context.getPrice()) {
+            System.out.println("Change is " + (moneyAmount - context.getPrice()) + "$...");
         }
     }
 
@@ -44,5 +43,10 @@ public class OnState extends AState {
     public void stop() {
         System.out.println("Stopping...");
         context.changeState(new OffState(context));
+    }
+
+    @Override
+    CoffeeMachineStatesSet getState() {
+        return CoffeeMachineStatesSet.ON;
     }
 }
