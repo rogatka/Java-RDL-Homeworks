@@ -1,6 +1,7 @@
 package Prototype;
 
 public interface ICreature {
-    void getName(); // имя
-    ICreature clone(); // сделать клона
+    String getName(); // имя
+    ColorSet getColor(); // цвет
+    ICreature copy(); // сделать клона
 }
