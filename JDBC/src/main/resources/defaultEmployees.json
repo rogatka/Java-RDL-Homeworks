@@ -1,0 +1,74 @@
+[
+  {
+    "fullName": "James Morgan McGill",
+    "position": "Programming Engineer",
+    "salary": 4000.47,
+    "departmentId": 1
+  },
+  {
+    "fullName": "Frank Garden",
+    "position": "Trouble Shooting",
+    "salary": 3200.77,
+    "departmentId": 1
+  },
+  {
+    "fullName": "Greg Robert Martin",
+    "position": "IT Manager",
+    "salary": 10400.27,
+    "departmentId": 1
+  },
+  {
+    "fullName": "Mark Francis Clattenburg",
+    "position": "Civil Engineer",
+    "salary": 2250.46,
+    "departmentId": 2
+  },
+  {
+    "fullName": "James Adam Driver",
+    "position": "Electrical Engineer",
+    "salary": 6650.33,
+    "departmentId": 2
+  },
+  {
+    "fullName": "Michael Collins",
+    "position": "Planning Manager",
+    "salary": 5030.86,
+    "departmentId": 2
+  },
+  {
+    "fullName": "John Terry",
+    "position": "Senior Administrator",
+    "salary": 6600.25,
+    "departmentId": 3
+  },
+  {
+    "fullName": "Jack Phillip Gordon",
+    "position": "Coordinator",
+    "salary": 7300.44,
+    "departmentId": 3
+  },
+  {
+    "fullName": "Frank Patrick Sullivan",
+    "position": "HR Manager",
+    "salary": 5323.13,
+    "departmentId": 3
+  },
+  {
+    "fullName": "Greg Driver",
+    "position": "Senior Accountant",
+    "salary": 6600.18,
+    "departmentId": 4
+  },
+  {
+    "fullName": "James Mason Mount",
+    "position": "Payroll Accountant",
+    "salary": 2990.99,
+    "departmentId": 4
+  },
+  {
+    "fullName": "Michael Robert Stewart",
+    "position": "Finance Manager",
+    "salary": 14000.47,
+    "departmentId": 4
+  }
+]

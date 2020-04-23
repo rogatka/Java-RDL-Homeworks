@@ -1,0 +1,18 @@
+[
+  {
+    "departmentName": "IT Department",
+    "managerId": 3
+  },
+  {
+    "departmentName": "Planning Department",
+    "managerId": 6
+  },
+  {
+    "departmentName": "HR Department",
+    "managerId": 9
+  },
+  {
+    "departmentName": "Finance Department",
+    "managerId": 12
+  }
+]
